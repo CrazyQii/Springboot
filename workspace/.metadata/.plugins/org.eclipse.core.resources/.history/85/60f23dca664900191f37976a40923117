@@ -1,0 +1,21 @@
+package test01;
+
+//导包
+import java.util.Scanner;
+
+public class demo05 {
+	public static void mian(String[] args) {
+		int n, i;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("请输入一个数字：");
+		n = sc.nextInt();
+		while (n != 1 && n < 1000) {
+			for (i = 0; i < n; i++) {
+				if (n % 9 ==0) {
+					System.out.println("数字 " + n + " 能被9整除");
+					break;
+				}
+			}
+		}
+	}
+}

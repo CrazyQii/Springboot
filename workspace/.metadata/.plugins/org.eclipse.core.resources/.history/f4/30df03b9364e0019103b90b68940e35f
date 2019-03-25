@@ -1,0 +1,16 @@
+package carzyqiqi.day02.demo04;
+
+/*
+ * 创建一个英雄对象
+ * 成员变量包含：姓名，战斗力 
+ */
+
+public class Hero {
+	private String name; 	//姓名
+	private int attack; 	//战斗力
+	
+	public void setHero(name, attack) {
+		this.name = name;
+		this.attack = attack;
+	}
+}

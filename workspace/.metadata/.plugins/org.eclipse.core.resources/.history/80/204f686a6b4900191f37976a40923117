@@ -1,0 +1,22 @@
+package test01;
+
+import java.util.Scanner;
+
+public class Demo07 {
+	public static void main(String[] args) {
+		int a;
+		int sum = 1;
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("输入一个数字 n：");
+		
+		a = sc.nextInt();
+		sum = fac(a);
+		System.out.println("n！ = " + sum);
+	}
+	
+	
+	public static int fac(int n) {
+		return fac(n--) * n;
+	}
+}

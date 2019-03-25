@@ -1,0 +1,11 @@
+package carzyqiqi.day02.demo04;
+
+//导入集合
+import java.util.ArrayList;
+
+public class DemoHero {
+	public static void main(String[] args) {
+		ArrayList<Hero> hero = new ArrayList<>();
+		
+	}
+}

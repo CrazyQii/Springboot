@@ -1,0 +1,13 @@
+package test01;
+
+public class Demo07 {
+	public static void main(String[] args) {
+		
+	}
+	
+	
+	public int fac(int n) {
+		n--;
+		return fac(n) * n;
+	}
+}

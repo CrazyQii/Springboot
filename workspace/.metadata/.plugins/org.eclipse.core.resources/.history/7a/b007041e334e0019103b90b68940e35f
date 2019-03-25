@@ -1,0 +1,11 @@
+package carzyqiqi.day02.demo03;
+
+//导入数组集合
+import java.util.ArrayList;
+
+public class DemoArrayList {
+	public static void main(String[] args) {
+		//创建数组集合
+		ArrayList<String> list = new ArrayList<>();
+	}
+}

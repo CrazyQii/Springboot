@@ -1,0 +1,17 @@
+package carzyqiqi.day02.demo04;
+
+//导入集合
+import java.util.ArrayList;
+
+public class DemoHero {
+	public static void main(String[] args) {
+		
+		//英雄实例化
+		Hero per1 = new Hero("蔡文姬", 1000);
+		
+		//设置集合
+		ArrayList<Hero> hero = new ArrayList<>();
+		hero.add(per1);
+		System.out.println(hero);
+	}
+}
