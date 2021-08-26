@@ -1,10 +1,10 @@
-package com.hlq.springboot;
+package com.hql.springbootshiro;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringbootApplicationTests {
+class SpringbootShiroApplicationTests {
 
     @Test
     void contextLoads() {
