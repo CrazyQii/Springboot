@@ -50,4 +50,13 @@ public class User implements Serializable {
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender + "}";
+    }
 }
