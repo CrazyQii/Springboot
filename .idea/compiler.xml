@@ -11,12 +11,14 @@
         <module name="SpringbootFile" />
         <module name="Quartz" />
         <module name="SpringbootShiro" />
+        <module name="File" />
         <module name="Mybatis" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="File" options="-parameters" />
       <module name="Mybatis" options="-parameters" />
       <module name="SpringbootFile" options="-parameters" />
       <module name="SpringbootSecurity" options="-parameters" />
