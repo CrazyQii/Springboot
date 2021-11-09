@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Basement" />
         <module name="SpringbootSecurity" />
         <module name="Kafka" />
         <module name="SpringbootFile" />
         <module name="Quartz" />
+        <module name="ScheduleTask" />
         <module name="SpringbootShiro" />
         <module name="File" />
         <module name="Mybatis" />

@@ -19,6 +19,7 @@ public class Application {
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(3).repeatForever()) // 简单触发器，每3秒执行一次，并永远执行
                 .build();
 
+
         trigger.getJobDataMap().put("t2", "tv2");
 
         // 创建Job

@@ -15,7 +15,7 @@ public class ZipPress {
     private static Logger LOGGER = LoggerFactory.getLogger(ZipPress.class);
 
     /**
-     * 压缩文件
+     * 压缩文件接口
      * @param sourPath 源文件夹路径
      * @param tarPath 生成路径
      * @param format 压缩格式
