@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  zookeeper:
+    image: zookeeper
+    volumes:
+      - ./data:/data
+    container_name: zookeeper
+    ports:
+      - "2182:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    container_name: kafka
+    environment:
+      KAFKA_BROKER_ID: 0
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+#      KAFKA_CREATE_TOPICS: "TOPIC_TEST:2:1"   #kafka启动后初始化一个有2个partition(分区)1个副本名叫 TOPIC_TEST 的topic
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://localhost:9092
+    volumes:
+      - ./kafka-logs:/kafka
+    depends_on:
+      - zookeeper

@@ -18,21 +18,18 @@
 
 
     <dependencies><!--    消费者API    -->
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.10</artifactId>
-            <version>0.8.0</version>
+            <artifactId>kafka_2.12</artifactId>
+            <version>3.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>0.8.2.0</version>
+            <version>3.0.0</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.apache.kafka</groupId>-->
-<!--            <artifactId>kafka-streams</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
     </dependencies>
 </project>
