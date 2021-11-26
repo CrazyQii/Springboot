@@ -31,11 +31,17 @@ public class OperateServiceImplTest {
     }
 
     @Test
-    public void should_read_base64_file_from_local_resource() {
+    public void should_print_base64_from_local_file() {
         // 文件转base64
-        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\Kafka常见问题";
+        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\Kafka常见问题.md";
         String base64 = operateService.saveFileToBase64(path);
-//        System.out.println(base64);
+        System.out.println(base64);
+    }
+
+    public void should_save_file_to_other_path_by_base64() {
+        // 文件转base64
+        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\Kafka常见问题.md";
+        String base64 = operateService.saveFileToBase64(path);
         // base64转文件，并保存本地
         FileInfoBase64 fileInfoBase64 = new FileInfoBase64();
         fileInfoBase64.setFileName("test2.pdf");

@@ -1,0 +1,11 @@
+kafka:
+  topic: TEST_TOPIC
+
+  producer:
+    broker_list: localhost:9092
+    client_id: clent1
+
+  consumer:
+    broker_list: localhost:9092
+    gourp_id: gourp1
+    auto_offset_reset: smallest

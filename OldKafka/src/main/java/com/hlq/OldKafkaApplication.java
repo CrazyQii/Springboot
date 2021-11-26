@@ -1,5 +1,6 @@
 package com.hlq;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create: 2021-11-24 15:25
  **/
 @SpringBootApplication
-public class OldKafkaApplication {
+public class OldKafkaApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(OldKafkaApplication.class, args);
