@@ -26,6 +26,7 @@ public class KafkaConfig {
     public static class Producer {
         private String brokerList;
         private String clientId;
+        private String acks;
     }
 
     /**

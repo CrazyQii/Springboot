@@ -1,11 +1,24 @@
 kafka:
-  topic: TEST_TOPIC
+  topic: TOPIC-TEST
 
   producer:
-    broker_list: localhost:9092
-    client_id: clent1
+    broker_list:  172.24.37.136:9092
+    client_id: hanlinqi
+    acks: all
 
   consumer:
     broker_list: localhost:9092
-    gourp_id: gourp1
-    auto_offset_reset: smallest
+    group_id: group1
+    auto_offset_reset: earliest
+
+#spring:
+#  kafka:
+#    producer:
+#      bootstrap-servers: localhost:9092
+#      acks: all
+#    consumer:
+#      bootstrap-servers: localhost:9092
+#      group-id: group1
+#      auto-offset-reset: earliest
+#    template:
+#      default-topic: TOPIC-TEST
