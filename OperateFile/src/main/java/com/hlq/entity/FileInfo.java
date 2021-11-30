@@ -14,7 +14,17 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileInfoBase64 {
+public class FileInfo {
+    /**
+     * 文件名
+     */
     private String fileName;
+    /**
+     * base64内容
+     */
     private String fileContent;
+    /**
+     * 字节流
+     */
+    private String fileByte;
 }

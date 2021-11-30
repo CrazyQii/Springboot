@@ -1,6 +1,6 @@
 package com.hlq.service.impl;
 
-import com.hlq.entity.FileInfoBase64;
+import com.hlq.entity.FileInfo;
 import com.hlq.service.OperateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +22,11 @@ public class OperateServiceImpl implements OperateService {
     private final static Logger LOGGER = LoggerFactory.getLogger(OperateServiceImpl.class);
 
     @Override
-    public String saveFileToBase64(String path) {
+    public String convertFileToBase64(String path) {
         InputStream in = null;
         try {
             //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-            byte[] data = null;
+            byte[] data;
             //读取图片字节数组
             in = new FileInputStream(path);
             data = new byte[in.available()];
@@ -50,11 +50,11 @@ public class OperateServiceImpl implements OperateService {
     }
 
     @Override
-    public void readBase64File(FileInfoBase64 fileInfoBase64, String path) {
+    public void convertBase64ToFile(FileInfo fileInfo, String path) {
         BASE64Decoder decoder = new BASE64Decoder();
         OutputStream out = null;
         try {
-            byte[] bytes = decoder.decodeBuffer(fileInfoBase64.getFileContent());
+            byte[] bytes = decoder.decodeBuffer(fileInfo.getFileContent());
             for (int i = 0; i < bytes.length; ++i)
             {
                 if (bytes[i] < 0)
@@ -64,7 +64,7 @@ public class OperateServiceImpl implements OperateService {
                 }
             }
             //生成文件
-            out = new FileOutputStream(path + fileInfoBase64.getFileName());
+            out = new FileOutputStream(path + fileInfo.getFileName());
             out.write(bytes);
         } catch (IOException e) {
             LOGGER.error("BASE64文件保存失败， ERROR | " + e);

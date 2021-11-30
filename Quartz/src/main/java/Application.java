@@ -15,8 +15,10 @@ public class Application {
         Trigger trigger = TriggerBuilder
                 .newTrigger()
                 .withIdentity("trigger1", "group1")
-                .usingJobData("t1", "tv1")  // 存储数据
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(3).repeatForever()) // 简单触发器，每3秒执行一次，并永远执行
+                // 存储数据
+                .usingJobData("t1", "tv1")
+                // 简单触发器，每3秒执行一次，并永远执行
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(3).repeatForever())
                 .build();
 
 
