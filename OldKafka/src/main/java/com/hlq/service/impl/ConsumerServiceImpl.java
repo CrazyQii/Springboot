@@ -2,13 +2,15 @@ package com.hlq.service.impl;
 
 import com.hlq.config.KafkaConfig;
 import com.hlq.service.ConsumerService;
+import com.hlq.service.KafkaProcessor;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import kafka.message.MessageAndMetadata;
+import kafka.serializer.StringDecoder;
+import kafka.utils.VerifiableProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,40 +48,75 @@ public class ConsumerServiceImpl implements ConsumerService {
             LOGGER.info("开始初始化消费者");
             try {
                 Properties props = new Properties();
-                props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getConsumer().getBrokerList());
+                props.put("zookeeper.connect", kafkaConfig.getConsumer().getZookeeperConnect());
                 props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConfig.getConsumer().getGroupId());
                 props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaConfig.getConsumer().getAutoOffsetReset());
-                props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-                props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+                props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, kafkaConfig.getConsumer().getEnableAutoCommit());
                 this.consumer = Consumer.createJavaConsumerConnector(new kafka.consumer.ConsumerConfig(props));
-                LOGGER.error("消费者初始化成功!!!");
+                LOGGER.info("消费者初始化成功!!!");
                 return true;
             } catch (Exception e) {
                 LOGGER.error("消费者初始化失败，ERROR | " + e);
-                if (this.consumer != null) {
-                    this.consumer.shutdown();
-                }
                 return false;
             }
         }
     }
 
     @Override
-    public void dealMessage(String topic) {
-        Map<String, Integer> map = new HashMap<>(1);
+    public void receiveMessage(String topic, Integer topicCount, Class clazz) {
+        Map<String, Integer> topicCountMap = new HashMap<>(1);
         if (this.init()) {
-            map.put(topic, 1);
-            Map<String, List<KafkaStream<byte[], byte[]>>> consumerMessageStreams = this.consumer.createMessageStreams(map);
-            KafkaStream<byte[], byte[]> stream = consumerMessageStreams.get(topic).get(0);
+            try {
+                // Consumer将用多少个线程消费该topic
+                // Consumer实例个数 * 每个Consumer的topicCount个数  <= partition
+                topicCountMap.put(topic, topicCount);
+                StringDecoder keyDecoder = new StringDecoder(new VerifiableProperties());
+                StringDecoder valueDecoder = new StringDecoder(new VerifiableProperties());
 
-            ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
+                Map<String, List<KafkaStream<String, String>>> consumerMessageStreams =
+                        this.consumer.createMessageStreams(topicCountMap, keyDecoder, valueDecoder);
+                KafkaStream<String, String> stream = consumerMessageStreams.get(topic).get(0);
 
-            while (iterator.hasNext()) {
-                String j = new String(iterator.next().message());
-                System.out.println(j);
+                if (stream.isEmpty()) {
+                    throw new RuntimeException("kafka steam 不可用 " + stream.toString());
+                }
+
+                ConsumerIterator<String, String> iterator = stream.iterator();
+                MessageAndMetadata<String, String> metadata = null;
+
+                // 实现类（多态）
+                KafkaProcessor processor = (KafkaProcessor) clazz.newInstance();
+
+                long noCommitMsgCount = 0;
+                while (iterator.hasNext()) {
+                    try {
+                        metadata = iterator.next();
+                        LOGGER.info("接收消息成功，topic [{}] partition [{}] offset [{}]",
+                                metadata.topic(), metadata.partition(), metadata.offset());
+                        processor.processor(metadata.message());
+                    } catch (Exception e) {
+                        LOGGER.info("消费异常 ERROR | topic [{}] partition [{}] offset [{}] ",
+                                metadata.topic(), metadata.partition(), metadata.offset());
+                    }
+                    noCommitMsgCount += 1;
+                    if (noCommitMsgCount >= 10) {
+                        // 处理10条消息，再提交位移，避免消息丢失
+                        LOGGER.info("提交位移 topic [{}] partition [{}] offset [{}]",
+                                metadata.topic(), metadata.partition(), metadata.offset());
+                        this.consumer.commitOffsets();
+                        noCommitMsgCount = 0;
+                    }
+                }
+            } catch (RuntimeException e) {
+                LOGGER.error("接收Kafka消息失败， ERROR | " + e);
+            } catch (Exception e) {
+                LOGGER.error("接收Kafka消息失败， ERROR | " + e);
             }
         } else {
             LOGGER.error("消费者未启动！！！");
+        }
+        if (this.consumer != null) {
+            this.consumer.shutdown();
         }
     }
 }

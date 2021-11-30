@@ -9,6 +9,8 @@ public interface ConsumerService {
     /**
      * 处理信息
      * @param topic 主题
+     * @param topicCount 消费者同一topic启动线程数量
+     * @param clazz 调用消费者的类
      */
-    void dealMessage(String topic);
+    <T> void receiveMessage(String topic, Integer topicCount, Class<T> clazz);
 }

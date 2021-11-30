@@ -1,5 +1,6 @@
 package com.hlq.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.hlq.config.KafkaConfig;
 import com.hlq.service.ProducerService;
 import org.apache.kafka.clients.producer.*;
@@ -8,11 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.Properties;
-import java.util.concurrent.Future;
 
 /**
  * @program: ProducerServiceImpl
@@ -41,9 +39,10 @@ public class ProducerServiceImpl implements ProducerService {
             LOGGER.info("初始化生产者...");
             try {
                 Properties prop = new Properties();
-                prop.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getProducer().getBrokerList());
+                prop.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getProducer().getBootstrapServers());
                 prop.put(ProducerConfig.CLIENT_ID_CONFIG, kafkaConfig.getProducer().getClientId());
                 prop.put(ProducerConfig.ACKS_CONFIG, kafkaConfig.getProducer().getAcks());
+                prop.put(ProducerConfig.RETRIES_CONFIG, kafkaConfig.getProducer().getRetries());
                 prop.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 prop.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 this.producer = new KafkaProducer<String, String>(prop);
@@ -69,14 +68,20 @@ public class ProducerServiceImpl implements ProducerService {
                     if (e != null) {
                         LOGGER.error("发送消息失败, 花费时间 {}ms ERROR | {}", (System.currentTimeMillis() - start) ,e);
                     } else {
-                        LOGGER.info("消息发送成功, 花费时间 {}ms: topic[{}] partition[{}] offset[{}]",
+                        LOGGER.info("消息发送成功, 花费时间 {}ms: topic[{}] partition[{}] offset[{}] message[{}]",
                                 (System.currentTimeMillis() - start), recordMetadata.topic(),
-                                recordMetadata.partition(), recordMetadata.offset());
+                                recordMetadata.partition(), recordMetadata.offset(), message);
                     }
                 }
             });
         } else {
             LOGGER.error("生产者未初始化 !!!");
         }
+    }
+
+    @Override
+    public void sendMessage(String topic, String key, Object object) {
+        String message = JSON.toJSONString(object);
+        this.sendMessage(topic, key, message);
     }
 }

@@ -2,23 +2,14 @@ kafka:
   topic: TOPIC-TEST
 
   producer:
-    broker_list:  172.24.37.136:9092
-    client_id: hanlinqi
-    acks: all
+    bootstrap-servers: 192.168.32.1:9092
+    client-id: hanlinqi
+    acks: all # 所有副本都必须接收到消息才算是已提交, 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。
+    retries: 3 # producer发送消息重试机制
 
   consumer:
-    broker_list: localhost:9092
-    group_id: group1
-    auto_offset_reset: earliest
-
-#spring:
-#  kafka:
-#    producer:
-#      bootstrap-servers: localhost:9092
-#      acks: all
-#    consumer:
-#      bootstrap-servers: localhost:9092
-#      group-id: group1
-#      auto-offset-reset: earliest
-#    template:
-#      default-topic: TOPIC-TEST
+    zookeeper-connect: 192.168.32.1:2181/kafka
+    group-id: group1
+    auto-offset-reset: smallest
+    topic-count: 1 # 消费者同一topic启动线程数量
+    enable-auto-commit: false  # 配置项的作用是当配置为false时，关闭自动提交，每次获取到消息后就不会更新存储在zookepper中的offset值（避免消息丢失）

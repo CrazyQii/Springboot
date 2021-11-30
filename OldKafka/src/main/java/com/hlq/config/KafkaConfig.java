@@ -2,6 +2,7 @@ package com.hlq.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,9 +25,10 @@ public class KafkaConfig {
      */
     @Data
     public static class Producer {
-        private String brokerList;
+        private String bootstrapServers;
         private String clientId;
         private String acks;
+        private String retries;
     }
 
     /**
@@ -34,8 +36,10 @@ public class KafkaConfig {
      */
     @Data
     public static class Consumer {
-        private String brokerList;
+        private String zookeeperConnect;
         private String groupId;
         private String autoOffsetReset;
+        private Integer topicCount;
+        private Boolean enableAutoCommit;
     }
 }
