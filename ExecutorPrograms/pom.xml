@@ -9,14 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>OperateFile</artifactId>
+    <artifactId>ExecutorPrograms</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <!--    Springboot依赖    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.6.0</version>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.5.6</version>
         </dependency>
 
         <!--lombok依赖-->
@@ -55,11 +60,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
 </project>

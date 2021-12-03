@@ -26,5 +26,5 @@ public class FileInfo {
     /**
      * 字节流
      */
-    private String fileByte;
+    private byte[] fileByte;
 }

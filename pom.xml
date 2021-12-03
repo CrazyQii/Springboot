@@ -14,11 +14,10 @@
         <module>Mybatis</module>
         <module>SpringbootSecurity</module>
         <module>SpringbootShiro</module>
-        <module>File</module>
-        <module>Basement</module>
         <module>ScheduleTask</module>
         <module>OldKafka</module>
         <module>OperateFile</module>
+        <module>ExecutorPrograms</module>
     </modules>
 
     <properties>

@@ -3,6 +3,7 @@ package com.hlq.service.impl;
 import com.hlq.config.KafkaConfig;
 import com.hlq.service.ConsumerService;
 import com.hlq.service.KafkaProcessor;
+import kafka.common.KafkaException;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
@@ -78,7 +79,7 @@ public class ConsumerServiceImpl implements ConsumerService {
                 KafkaStream<String, String> stream = consumerMessageStreams.get(topic).get(0);
 
                 if (stream.isEmpty()) {
-                    throw new RuntimeException("kafka steam 不可用 " + stream.toString());
+                    throw new KafkaException("kafka steam 不可用 " + stream.toString());
                 }
 
                 ConsumerIterator<String, String> iterator = stream.iterator();
@@ -107,8 +108,6 @@ public class ConsumerServiceImpl implements ConsumerService {
                         noCommitMsgCount = 0;
                     }
                 }
-            } catch (RuntimeException e) {
-                LOGGER.error("接收Kafka消息失败， ERROR | " + e);
             } catch (Exception e) {
                 LOGGER.error("接收Kafka消息失败， ERROR | " + e);
             }

@@ -8,20 +8,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="untitled" />
-        <module name="Basement" />
         <module name="SpringbootSecurity" />
         <module name="Kafka" />
         <module name="OperateFile" />
+        <module name="ExecutorPrograms" />
         <module name="SpringbootFile" />
         <module name="Quartz" />
         <module name="ScheduleTask" />
         <module name="SpringbootShiro" />
-        <module name="File" />
         <module name="Mybatis" />
         <module name="OldKafka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Basement" target="8" />
+      <module name="File" target="1.8" />
       <module name="SpringJwt" target="1.8" />
       <module name="untitled" target="8" />
     </bytecodeTargetLevel>

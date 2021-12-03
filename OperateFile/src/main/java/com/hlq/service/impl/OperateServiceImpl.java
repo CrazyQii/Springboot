@@ -5,6 +5,7 @@ import com.hlq.service.OperateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -76,6 +77,70 @@ public class OperateServiceImpl implements OperateService {
                 }
             } catch (IOException e) {
                 LOGGER.error("BASE64文件保存失败，文件流关闭异常 | ERROR " + e);
+            }
+        }
+    }
+
+    @Override
+    public void saveFileByByte(MultipartFile[] multipartFiles, String path) {
+        BufferedOutputStream bufferedOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File file;
+        try {
+            file = new File(path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            for (MultipartFile multipartFile: multipartFiles) {
+                file = new File(path+"\\"+multipartFile.getOriginalFilename());
+                fileOutputStream = new FileOutputStream(file);
+                bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                bufferedOutputStream.write(multipartFile.getBytes());
+            }
+            LOGGER.info("文件落地成功，保存地址：" + path);
+        } catch (Exception e) {
+            LOGGER.error("字节流保存失败");
+        } finally {
+            try {
+                if (bufferedOutputStream != null) {
+                    bufferedOutputStream.close();
+                }
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                LOGGER.error("字节流文件关闭失败，文件流关闭异常 | ERROR " + e);
+            }
+        }
+    }
+
+    @Override
+    public void saveFileByByte(MultipartFile multipartFile, String path) {
+        BufferedOutputStream bufferedOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File file;
+        try {
+            file = new File(path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            file = new File(path+"\\"+multipartFile.getOriginalFilename());
+            fileOutputStream = new FileOutputStream(file);
+            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+            bufferedOutputStream.write(multipartFile.getBytes());
+            LOGGER.info("文件落地成功，保存地址：" + path);
+        } catch (Exception e) {
+            LOGGER.error("字节流保存失败");
+        } finally {
+            try {
+                if (bufferedOutputStream != null) {
+                    bufferedOutputStream.close();
+                }
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                LOGGER.error("字节流文件保存失败，文件流关闭异常 | ERROR " + e);
             }
         }
     }

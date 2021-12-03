@@ -1,6 +1,7 @@
 package com.hlq.service;
 
 import com.hlq.entity.FileInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @program: OperateService
@@ -23,4 +24,18 @@ public interface OperateService {
      * @param path 文件存储路径
      */
     void convertBase64ToFile(FileInfo fileInfo, String path);
+
+    /**
+     * 保存文件
+     * @param multipartFiles 批量文件信息
+     * @param path 文件存储路径
+     */
+    void saveFileByByte(MultipartFile[] multipartFiles, String path);
+
+    /**
+     * 保存文件
+     * @param multipartFile 文件信息
+     * @param path 文件存储路径
+     */
+    void saveFileByByte(MultipartFile multipartFile, String path);
 }
