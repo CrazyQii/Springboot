@@ -1,8 +1,8 @@
-package com.hlq.service.impl;
+package com.hlq.kafka.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.hlq.config.KafkaConfig;
-import com.hlq.service.ProducerService;
+import com.hlq.kafka.ProducerService;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -43,6 +43,7 @@ public class ProducerServiceImpl implements ProducerService {
                 prop.put(ProducerConfig.CLIENT_ID_CONFIG, kafkaConfig.getProducer().getClientId());
                 prop.put(ProducerConfig.ACKS_CONFIG, kafkaConfig.getProducer().getAcks());
                 prop.put(ProducerConfig.RETRIES_CONFIG, kafkaConfig.getProducer().getRetries());
+                prop.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, kafkaConfig.getProducer().getMaxRequestSize());
                 prop.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 prop.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 this.producer = new KafkaProducer<String, String>(prop);

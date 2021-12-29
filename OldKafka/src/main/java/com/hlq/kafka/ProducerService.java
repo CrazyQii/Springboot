@@ -1,4 +1,4 @@
-package com.hlq.service;
+package com.hlq.kafka;
 
 /**
  * @program: ProducerService

@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>Kafka</module>
         <module>Quartz</module>
         <module>Mybatis</module>
         <module>SpringbootSecurity</module>
@@ -18,6 +17,8 @@
         <module>OldKafka</module>
         <module>OperateFile</module>
         <module>ExecutorPrograms</module>
+        <module>demo</module>
+        <module>Hbase</module>
     </modules>
 
     <properties>

@@ -1,8 +1,8 @@
-package com.hlq.service.impl;
+package com.hlq.kafka.impl;
 
 import com.hlq.config.KafkaConfig;
-import com.hlq.service.ConsumerService;
-import com.hlq.service.KafkaProcessor;
+import com.hlq.kafka.ConsumerService;
+import com.hlq.kafka.KafkaProcessor;
 import kafka.common.KafkaException;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerIterator;

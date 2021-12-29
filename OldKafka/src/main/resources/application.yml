@@ -6,6 +6,7 @@ kafka:
     client-id: hanlinqi
     acks: all # 所有副本都必须接收到消息才算是已提交, 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。
     retries: 3 # producer发送消息重试机制
+    max-request-size: 1024
 
   consumer:
     zookeeper-connect: 192.168.32.1:2181/kafka

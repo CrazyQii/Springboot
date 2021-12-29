@@ -29,6 +29,7 @@ public class KafkaConfig {
         private String clientId;
         private String acks;
         private String retries;
+        private String maxRequestSize;
     }
 
     /**

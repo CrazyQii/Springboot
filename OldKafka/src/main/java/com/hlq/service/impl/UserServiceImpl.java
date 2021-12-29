@@ -2,7 +2,7 @@ package com.hlq.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.hlq.entity.User;
-import com.hlq.service.KafkaProcessor;
+import com.hlq.kafka.KafkaProcessor;
 import com.hlq.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
