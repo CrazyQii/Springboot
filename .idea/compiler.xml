@@ -8,17 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="untitled" />
+        <module name="SpringbootSecurity" />
+        <module name="OperateFile" />
         <module name="ExecutorPrograms" />
         <module name="SpringbootFile" />
         <module name="Quartz" />
         <module name="ScheduleTask" />
         <module name="demo" />
-        <module name="OldKafka" />
-        <module name="SpringbootSecurity" />
-        <module name="OperateFile" />
         <module name="SpringbootShiro" />
         <module name="Hbase" />
         <module name="Mybatis" />
+        <module name="OldKafka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
