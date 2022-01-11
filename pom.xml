@@ -11,8 +11,6 @@
     <modules>
         <module>Quartz</module>
         <module>Mybatis</module>
-        <module>SpringbootSecurity</module>
-        <module>SpringbootShiro</module>
         <module>ScheduleTask</module>
         <module>OldKafka</module>
         <module>OperateFile</module>

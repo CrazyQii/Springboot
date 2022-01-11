@@ -8,8 +8,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/SpringbootShiro/pom.xml" />
-        <option value="$PROJECT_DIR$/SpringbootSecurity/pom.xml" />
         <option value="$PROJECT_DIR$/SpringbootJwt/pom.xml" />
         <option value="$PROJECT_DIR$/SpringJwt/pom.xml" />
       </list>

@@ -8,14 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="untitled" />
-        <module name="SpringbootSecurity" />
         <module name="OperateFile" />
         <module name="ExecutorPrograms" />
         <module name="SpringbootFile" />
         <module name="Quartz" />
         <module name="ScheduleTask" />
         <module name="demo" />
-        <module name="SpringbootShiro" />
         <module name="Hbase" />
         <module name="Mybatis" />
         <module name="OldKafka" />
@@ -25,6 +23,8 @@
       <module name="Basement" target="8" />
       <module name="File" target="1.8" />
       <module name="Kafka" target="8" />
+      <module name="SpringbootSecurity" target="1.8" />
+      <module name="SpringbootShiro" target="1.8" />
       <module name="SpringJwt" target="1.8" />
       <module name="untitled" target="8" />
     </bytecodeTargetLevel>

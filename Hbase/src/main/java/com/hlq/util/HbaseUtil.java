@@ -30,105 +30,73 @@ public class HbaseUtil {
     /**
      * 配置文件
      */
-    private Configuration configuration = null;
+    private Configuration conf = null;
 
     /**
      * SQL连接
      */
-    private Connection connection = null;
+    private Connection conn = null;
 
     /**
      * 创建数据库管理对象，负责管理数据库的表信息
      */
     private Admin admin = null;
 
+    /**
+     * 显示配置
+     */
+    public void initPub() {
+        conf = HBaseConfiguration.create();
+        // zookeeper配置
+        conf.set("hbase.zookeeper.quorum","121.41.169.208");
+        conf.set("hbase.zookeeper.property.clientPort","2181");
+        // Hbase master 连接
+        conf.set("hbase.master", "121.41.169.208:16000");
+        conf.setInt("hbase.regionserver.port", 16201);
+        conf.setInt("hbase.rpc.timeout",200);
+        conf.setInt("hbase.client.operation.timeout",300);
+        conf.setInt("hbase.client.scanner.timeout.period",200);
+
+        try {
+            conn = ConnectionFactory.createConnection(conf);
+        } catch (IOException e) {
+            LOGGER.error("创建Hbase连接错误, ERROR | {}", e.getMessage());
+        }
+
+    }
+
+    /**
+     * 初始化连接
+     */
     @PostConstruct
     public void init() {
-        this.configuration = this.initConf();
-        LOGGER.info(configuration.toString());
-        this.connection = this.initConn();
-        LOGGER.info(connection.toString());
-
-        this.admin = this.initAdmin();
-    }
-
-    /**
-     * 获取配置文件
-     */
-    private Configuration initConf() {
-        Configuration configuration = null;
         try {
-            configuration = HBaseConfiguration.create();
-            System.out.println(new Path("hbase-site.xml"));
-            configuration.addResource(new Path("hbase-site.xml"));
-//            configuration.addResource(new Path("/hadoop/etc/hadoop/core-site.xml"));
+            conf = HBaseConfiguration.create();
+            conf.addResource(new Path("hbase-site.xml"));
+            conn = ConnectionFactory.createConnection(conf);
         } catch (Exception e) {
-            LOGGER.error("获取配置文件失败，ERROR | {}", e.getMessage());
-        }
-        return configuration;
-    }
-
-    /**
-     * 创建SQL连接
-     */
-    public Connection initConn() {
-        Connection connection = null;
-        if (this.configuration != null) {
-            try {
-                connection = ConnectionFactory.createConnection(this.configuration);
-            } catch (IOException e) {
-                LOGGER.error("创建SQL连接失败，ERROR | {}", e.getMessage());
-            }
-        }
-        return connection;
-    }
-
-    /**
-     * 关闭连接
-     */
-    @PreDestroy
-    public void closeConn() {
-        try {
-            if (this.admin != null) {
-                this.admin.close();
-            }
-            if (this.connection != null) {
-                this.connection.close();
-            }
-        } catch (Exception e) {
-            LOGGER.error("关闭Hbase连接失败，ERROR | {}", e.getMessage());
+            LOGGER.error("创建Hbase连接失败，ERROR | {}", e.getMessage());
         }
     }
 
     /**
-     * 创建Hbase管理对象
+     * 创建表
+     * @param tableName 表名称
+     * @param columnFamilies 列族
+     * @throws Exception
      */
-    public Admin initAdmin() {
-        Admin admin = null;
-        if (this.connection != null) {
-            try {
-                admin = this.connection.getAdmin();
-            } catch (Exception e) {
-                LOGGER.error("创建Hbase admin管理失败，ERROR | {}", e.getMessage());
-            }
+    public void createTable(String tableName, String[] columnFamilies) throws Exception {
+        admin = conn.getAdmin();
+        if (admin.tableExists(TableName.valueOf(tableName))) {
+            throw new Exception(tableName + " 已经存在");
         }
-        return admin;
-    }
-
-    public void createTable(String newTableName, String[] colFamily) {
-        TableName tableName = TableName.valueOf(newTableName);
-        try {
-            if (this.admin.tableExists(tableName)) {
-                throw new Exception(newTableName + "已经存在");
-            }
-            HTableDescriptor hTableDescriptor = new HTableDescriptor(tableName);
-            for (String str: colFamily) {
-                HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(str);
-                hTableDescriptor.addFamily(hColumnDescriptor);
-            }
-            this.admin.createTable(hTableDescriptor);
-        } catch (Exception e) {
-            LOGGER.error("创建Hbase table失败，ERROR | {}", e.getMessage());
+        HTableDescriptor table = new HTableDescriptor(TableName.valueOf(tableName));
+        for (String col: columnFamilies) {
+            HColumnDescriptor column = new HColumnDescriptor(col);
+            table.addFamily(column);
         }
+        admin.createTable(table);
+        LOGGER.info(tableName + " 创建成功!");
+        admin.close();
     }
 }
