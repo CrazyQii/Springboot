@@ -2,13 +2,9 @@ package com.hlq.util;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Admin;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -79,6 +75,20 @@ public class HbaseUtil {
         }
     }
 
+    @PreDestroy
+    public void destroy() {
+        try {
+            if (this.admin != null) {
+                this.admin.close();
+            }
+            if (this.conn != null) {
+                this.conn.close();
+            }
+        } catch (Exception e) {
+            LOGGER.error("销毁Hbase失败，ERROR | {}", e.getMessage());
+        }
+    }
+
     /**
      * 创建表
      * @param tableName 表名称
@@ -88,7 +98,7 @@ public class HbaseUtil {
     public void createTable(String tableName, String[] columnFamilies) throws Exception {
         admin = conn.getAdmin();
         if (admin.tableExists(TableName.valueOf(tableName))) {
-            throw new Exception(tableName + " 已经存在");
+            throw new Exception("Hbase " + tableName + " 已经存在!");
         }
         HTableDescriptor table = new HTableDescriptor(TableName.valueOf(tableName));
         for (String col: columnFamilies) {
@@ -96,7 +106,59 @@ public class HbaseUtil {
             table.addFamily(column);
         }
         admin.createTable(table);
-        LOGGER.info(tableName + " 创建成功!");
+        LOGGER.info("Hbase {} 创建成功!", tableName);
         admin.close();
+    }
+
+    /**
+     * 扫描全表
+     * @param tableName 表名称
+     * @throws Exception
+     */
+    public void scanTable(String tableName) throws Exception {
+        Scan scan = new Scan();
+        Table table = conn.getTable(TableName.valueOf(tableName));
+        ResultScanner rs = table.getScanner(scan);
+        for (Result result : rs) {
+            for (Cell cell : result.listCells()) {
+                System.out.println(Bytes.toString(cell.getFamilyArray()));
+            }
+        }
+        rs.close();
+    }
+
+
+    /**
+     * 扫描行
+     * @param tableName 表名
+     * @param rowKey 主键
+     * @throws IOException
+     */
+    public void scanRow(String tableName, String rowKey) throws IOException {
+        Get get = new Get(Bytes.toBytes(rowKey));
+        Table table = conn.getTable(TableName.valueOf(tableName));
+        Result result = table.get(get);
+        for (Cell cell: result.listCells()) {
+            System.out.println(Bytes.toString(cell.getFamilyArray()));
+        }
+    }
+
+    /**
+     * 插入数据
+     * @param tableName 表名
+     * @param rowKey 主键
+     * @param columnFamily 列族
+     * @param columns 列
+     * @param data 数据
+     * @throws IOException
+     */
+    public void insertData(String tableName, String rowKey, String columnFamily, String[] columns,  String[] data) throws IOException {
+        Table table = conn.getTable(TableName.valueOf(tableName));
+        Put put = new Put(Bytes.toBytes(rowKey));
+        for (int i = 0; i < columns.length; i++) {
+            put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(columns[i]), Bytes.toBytes(data[i]));
+        }
+        table.put(put);
+        table.close();
     }
 }

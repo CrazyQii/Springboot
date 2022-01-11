@@ -22,7 +22,7 @@ public class HbaseUtilTest {
     private HbaseUtil hbaseUtil;
 
     @Test
-    public void start() {
+    public void createTable() {
         try {
             String tableName = "Students";
             String[] cols = new String[]{"col1", "col2"};
@@ -30,5 +30,23 @@ public class HbaseUtilTest {
         } catch (Exception e) {
             LOGGER.error("测试失败，ERROR | {}", e.getMessage());
         }
+    }
+
+    @Test
+    public void scanTable() {
+        try {
+            String tableName = "Students";
+            hbaseUtil.scanTable(tableName);
+        } catch (Exception e) {
+            LOGGER.error("扫描全表失败，ERROR | {}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void scanRow() {
+    }
+
+    @Test
+    public void insertData() {
     }
 }
