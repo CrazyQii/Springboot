@@ -35,7 +35,7 @@ public class HbaseUtilTest {
     @Test
     public void scanTable() {
         try {
-            String tableName = "Students";
+            String tableName = "Student";
             hbaseUtil.scanTable(tableName);
         } catch (Exception e) {
             LOGGER.error("扫描全表失败，ERROR | {}", e.getMessage());
@@ -44,9 +44,60 @@ public class HbaseUtilTest {
 
     @Test
     public void scanRow() {
+        try {
+            String tableName = "Student";
+            String rowKey = "0002";
+            hbaseUtil.scanRow(tableName, rowKey);
+        } catch (Exception e) {
+            LOGGER.error("扫描Hbase行失败，ERROR | {}", e.getMessage());
+        }
     }
 
     @Test
     public void insertData() {
+        try {
+            String tableName = "Student";
+            String rowKey = "0002";
+            String columnFamily = "StuInfo";
+            String[] column = new String[]{"Name"};
+            String[] data = new String[] {"hlq"};
+            hbaseUtil.insertRowData(tableName, rowKey, columnFamily, column, data);
+        } catch (Exception e) {
+            LOGGER.error("Hbase插入数据失败，ERROR | {}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void dropTable() {
+        try {
+            String tableName = "Students";
+            hbaseUtil.dropTable(tableName);
+        } catch (Exception e) {
+            LOGGER.error("Hbase删除表失败, ERROR | {}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void deleteRowData() {
+        try {
+            String tableName = "Student";
+            String rowKey = "0002";
+            hbaseUtil.deleteRowData(tableName, rowKey);
+        } catch (Exception e) {
+            LOGGER.error("Hbase删除行数据失败， ERROR | {}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void deleteColData() {
+        try {
+            String tableName = "Student";
+            String rowKey = "0002";
+            String columnFamily = "StuInfo";
+            String column = "Age";
+            hbaseUtil.deleteColData(tableName, rowKey, columnFamily, column);
+        } catch (Exception e) {
+            LOGGER.error("删除列数据失败， ERROR | {}", e.getMessage());
+        }
     }
 }

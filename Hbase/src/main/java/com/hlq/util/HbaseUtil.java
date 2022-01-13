@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @Program: HbaseUtil
@@ -70,6 +72,7 @@ public class HbaseUtil {
             conf = HBaseConfiguration.create();
             conf.addResource(new Path("hbase-site.xml"));
             conn = ConnectionFactory.createConnection(conf);
+            admin = conn.getAdmin();
         } catch (Exception e) {
             LOGGER.error("创建Hbase连接失败，ERROR | {}", e.getMessage());
         }
@@ -96,7 +99,6 @@ public class HbaseUtil {
      * @throws Exception
      */
     public void createTable(String tableName, String[] columnFamilies) throws Exception {
-        admin = conn.getAdmin();
         if (admin.tableExists(TableName.valueOf(tableName))) {
             throw new Exception("Hbase " + tableName + " 已经存在!");
         }
@@ -111,6 +113,22 @@ public class HbaseUtil {
     }
 
     /**
+     * 删除表
+     * @param tableName 表名称
+     * @throws Exception
+     */
+    public void dropTable(String tableName) throws Exception {
+        TableName tn = TableName.valueOf(tableName);
+        if (this.admin.tableExists(tn)) {
+            this.admin.disableTable(tn);
+            this.admin.deleteTable(tn);
+        } else {
+            throw new Exception("Hbase 表格" + tableName + "不存在");
+        }
+        LOGGER.info("删除Hbase表格" + tableName + "成功");
+    }
+
+    /**
      * 扫描全表
      * @param tableName 表名称
      * @throws Exception
@@ -119,9 +137,13 @@ public class HbaseUtil {
         Scan scan = new Scan();
         Table table = conn.getTable(TableName.valueOf(tableName));
         ResultScanner rs = table.getScanner(scan);
-        for (Result result : rs) {
+        for (Result result: rs) {
             for (Cell cell : result.listCells()) {
-                System.out.println(Bytes.toString(cell.getFamilyArray()));
+                String row = Bytes.toString(cell.getRowArray(), cell.getRowOffset(), cell.getRowLength());
+                String family = Bytes.toString(cell.getFamilyArray(), cell.getFamilyOffset(), cell.getFamilyLength());
+                String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+                String qua = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
+                System.out.println("row:" + row + " family:" + family + " value:" + value + " qua:" + qua);
             }
         }
         rs.close();
@@ -139,7 +161,11 @@ public class HbaseUtil {
         Table table = conn.getTable(TableName.valueOf(tableName));
         Result result = table.get(get);
         for (Cell cell: result.listCells()) {
-            System.out.println(Bytes.toString(cell.getFamilyArray()));
+            String row = Bytes.toString(cell.getRowArray(), cell.getRowOffset(), cell.getRowLength());
+            String family = Bytes.toString(cell.getFamilyArray(), cell.getFamilyOffset(), cell.getFamilyLength());
+            String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+            String qua = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
+            System.out.println("row:" + row + " family:" + family + " value:" + value + " qua:" + qua);
         }
     }
 
@@ -152,7 +178,7 @@ public class HbaseUtil {
      * @param data 数据
      * @throws IOException
      */
-    public void insertData(String tableName, String rowKey, String columnFamily, String[] columns,  String[] data) throws IOException {
+    public void insertRowData(String tableName, String rowKey, String columnFamily, String[] columns,  String[] data) throws IOException {
         Table table = conn.getTable(TableName.valueOf(tableName));
         Put put = new Put(Bytes.toBytes(rowKey));
         for (int i = 0; i < columns.length; i++) {
@@ -160,5 +186,36 @@ public class HbaseUtil {
         }
         table.put(put);
         table.close();
+
+        LOGGER.info("插入Hbase数据成功，{} {} {} {} {}", new Object[]{tableName, rowKey, columnFamily, Arrays.toString(columns), Arrays.toString(data)});
+    }
+
+    /**
+     * 删除行数据，包括所有列，列族以及版本
+     * @param tableName 表名称
+     * @param rowKey 主键
+     * @throws IOException
+     */
+    public void deleteRowData(String tableName, String rowKey) throws Exception {
+        Table table = this.conn.getTable(TableName.valueOf(tableName));
+        Delete delete = new Delete(Bytes.toBytes(rowKey));
+        table.delete(delete);
+        LOGGER.info("删除数据成功，" + rowKey);
+    }
+
+    /**
+     * 删除某个行指定的列数据
+     * @param tableName 表名称
+     * @param rowKey 主键
+     * @param colFamily 列族
+     * @param column 列
+     * @throws IOException
+     */
+    public void deleteColData(String tableName, String rowKey, String colFamily, String column) throws Exception {
+        Table table = this.conn.getTable(TableName.valueOf(tableName));
+        Delete delete = new Delete(Bytes.toBytes(rowKey));
+        delete.addColumn(Bytes.toBytes(colFamily), Bytes.toBytes(column));
+        table.delete(delete);
+        LOGGER.info("删除数据成功，{} {}", new Object[]{rowKey, colFamily});
     }
 }
