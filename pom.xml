@@ -11,7 +11,6 @@
     <modules>
         <module>Quartz</module>
         <module>Mybatis</module>
-        <module>ScheduleTask</module>
         <module>OldKafka</module>
         <module>OperateFile</module>
         <module>ExecutorPrograms</module>

@@ -12,7 +12,6 @@
         <module name="ExecutorPrograms" />
         <module name="SpringbootFile" />
         <module name="Quartz" />
-        <module name="ScheduleTask" />
         <module name="demo" />
         <module name="Hbase" />
         <module name="Mybatis" />
@@ -23,6 +22,7 @@
       <module name="Basement" target="8" />
       <module name="File" target="1.8" />
       <module name="Kafka" target="8" />
+      <module name="ScheduleTask" target="8" />
       <module name="SpringbootSecurity" target="1.8" />
       <module name="SpringbootShiro" target="1.8" />
       <module name="SpringJwt" target="1.8" />
