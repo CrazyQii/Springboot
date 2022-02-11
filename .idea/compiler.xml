@@ -7,13 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="untitled" />
         <module name="OperateFile" />
         <module name="ExecutorPrograms" />
         <module name="SpringbootFile" />
+        <module name="simple-bean-factory-2" />
         <module name="Quartz" />
         <module name="demo" />
         <module name="Hbase" />
+        <module name="simple-bean-factory" />
         <module name="Mybatis" />
         <module name="OldKafka" />
       </profile>

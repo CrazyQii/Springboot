@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/Basement/pom.xml" />
         <option value="$PROJECT_DIR$/Kafka/pom.xml" />
         <option value="$PROJECT_DIR$/ScheduleTask/pom.xml" />
+        <option value="$PROJECT_DIR$/simple-bean-factory-2/pom.xml" />
       </set>
     </option>
   </component>
