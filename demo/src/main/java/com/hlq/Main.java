@@ -10,13 +10,11 @@ package com.hlq;
 public class Main {
 
     public static void main(String[] args) {
-        String str = "abd";
-        if (str.lastIndexOf('.') != -1) {
-            String result = str.substring(0, str.lastIndexOf("."));
-            System.out.println(result);
-        }
-//        System.out.println(str.lastIndexOf('.'));
-//        String result = str.substring(0, str.lastIndexOf("."));
-//        System.out.println(result);
+        Thread thread = new Thread(() -> {
+
+        });
+        System.out.println(thread.getState());
+        thread.start();
+        System.out.println(thread.getState());
     }
 }

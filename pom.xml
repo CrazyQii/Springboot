@@ -18,6 +18,7 @@
         <module>Hbase</module>
         <module>Ioc</module>
         <module>simple-bean-factory-2</module>
+        <module>design-pattern</module>
     </modules>
 
     <properties>
