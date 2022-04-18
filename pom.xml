@@ -9,16 +9,14 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>Quartz</module>
-        <module>Mybatis</module>
-        <module>OldKafka</module>
-        <module>OperateFile</module>
-        <module>ExecutorPrograms</module>
-        <module>demo</module>
-        <module>Hbase</module>
+        <module>quartz</module>
+        <module>mybatis-demo</module>
+        <module>old-kafka</module>
+        <module>operate-file</module>
+        <module>hbase</module>
         <module>Ioc</module>
-        <module>simple-bean-factory-2</module>
         <module>design-pattern</module>
+        <module>mult-thread</module>
     </modules>
 
     <properties>

@@ -8,21 +8,22 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="factory-partern" />
-        <module name="OperateFile" />
-        <module name="ExecutorPrograms" />
+        <module name="operate-file" />
+        <module name="old-kafka" />
+        <module name="mult-thread" />
+        <module name="quartz" />
+        <module name="mybatis-demo" />
         <module name="SpringbootFile" />
         <module name="simple-bean-factory-2" />
         <module name="builder-parttern" />
-        <module name="Quartz" />
-        <module name="demo" />
-        <module name="Hbase" />
         <module name="simple-bean-factory" />
-        <module name="Mybatis" />
-        <module name="OldKafka" />
+        <module name="hbase" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Basement" target="8" />
+      <module name="demo" target="8" />
+      <module name="ExecutorPrograms" target="8" />
       <module name="File" target="1.8" />
       <module name="Kafka" target="8" />
       <module name="ScheduleTask" target="8" />
@@ -35,12 +36,12 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="File" options="-parameters" />
-      <module name="Mybatis" options="-parameters" />
-      <module name="OldKafka" options="" />
       <module name="SpringJwt" options="-parameters" />
       <module name="SpringbootFile" options="-parameters" />
       <module name="SpringbootSecurity" options="-parameters" />
       <module name="SpringbootShiro" options="-parameters" />
+      <module name="mybatis-demo" options="-parameters" />
+      <module name="old-kafka" options="" />
     </option>
   </component>
 </project>
