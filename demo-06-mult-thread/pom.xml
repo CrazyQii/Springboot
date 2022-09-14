@@ -2,29 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Project</artifactId>
+        <groupId>com.hlq</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hlq</groupId>
-    <artifactId>Project</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>demo-01-kafka</module>
-        <module>demo-02-hbase</module>
-        <module>demo-03-quartz</module>
-        <module>demo-04-Ioc</module>
-        <module>demo-05-mybatis</module>
-        <module>demo-06-mult-thread</module>
-    </modules>
+    <artifactId>demo-06-mult-thread</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
-    <dependencies>
-
-    </dependencies>
-
 
 </project>

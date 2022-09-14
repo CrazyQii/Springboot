@@ -7,25 +7,31 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="factory-partern" />
-        <module name="operate-file" />
-        <module name="old-kafka" />
-        <module name="mult-thread" />
-        <module name="quartz" />
-        <module name="mybatis-demo" />
+        <module name="demo-05-mybatis" />
         <module name="SpringbootFile" />
         <module name="simple-bean-factory-2" />
-        <module name="builder-parttern" />
+        <module name="demo-01-kafka" />
         <module name="simple-bean-factory" />
-        <module name="hbase" />
+        <module name="demo-03-quartz" />
+        <module name="demo-02-hbase" />
+        <module name="demo-06-mult-thread" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Basement" target="8" />
+      <module name="builder-parttern" target="8" />
       <module name="demo" target="8" />
+      <module name="design-pattern" target="8" />
       <module name="ExecutorPrograms" target="8" />
+      <module name="factory-partern" target="8" />
       <module name="File" target="1.8" />
+      <module name="hbase" target="8" />
       <module name="Kafka" target="8" />
+      <module name="mock-login" target="1.8" />
+      <module name="mybatis-annoation-demo" target="8" />
+      <module name="operate-file" target="8" />
+      <module name="quartz" target="8" />
+      <module name="redis-demo" target="8" />
       <module name="ScheduleTask" target="8" />
       <module name="SpringbootSecurity" target="1.8" />
       <module name="SpringbootShiro" target="1.8" />
@@ -40,8 +46,9 @@
       <module name="SpringbootFile" options="-parameters" />
       <module name="SpringbootSecurity" options="-parameters" />
       <module name="SpringbootShiro" options="-parameters" />
-      <module name="mybatis-demo" options="-parameters" />
-      <module name="old-kafka" options="" />
+      <module name="demo-01-kafka" options="" />
+      <module name="demo-05-mybatis" options="-parameters" />
+      <module name="mock-login" options="-parameters" />
     </option>
   </component>
 </project>

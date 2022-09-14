@@ -14,12 +14,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/Basement/pom.xml" />
-        <option value="$PROJECT_DIR$/ExecutorPrograms/pom.xml" />
-        <option value="$PROJECT_DIR$/Kafka/pom.xml" />
-        <option value="$PROJECT_DIR$/ScheduleTask/pom.xml" />
-        <option value="$PROJECT_DIR$/demo/pom.xml" />
-        <option value="$PROJECT_DIR$/simple-bean-factory-2/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-demo/pom.xml" />
       </set>
     </option>
   </component>
