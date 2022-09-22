@@ -13,7 +13,6 @@
         <module>demo-02-hbase</module>
         <module>demo-03-quartz</module>
         <module>demo-04-Ioc</module>
-        <module>demo-05-mybatis</module>
         <module>demo-06-mult-thread</module>
     </modules>
 

@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demo-05-mybatis" />
         <module name="SpringbootFile" />
         <module name="simple-bean-factory-2" />
         <module name="demo-01-kafka" />
@@ -21,6 +20,7 @@
       <module name="Basement" target="8" />
       <module name="builder-parttern" target="8" />
       <module name="demo" target="8" />
+      <module name="demo-05-mybatis" target="1.8" />
       <module name="design-pattern" target="8" />
       <module name="ExecutorPrograms" target="8" />
       <module name="factory-partern" target="8" />
